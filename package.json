@@ -1,0 +1,25 @@
+{
+  "name": "snake",
+  "version": "0.0.1",
+  "description": "A snake arcade game implementation",
+  "main": "game.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tubaplaya21/snake.git"
+  },
+  "keywords": [
+    "snake"
+  ],
+  "author": "Benjamin Miller",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tubaplaya21/snake/issues"
+  },
+  "homepage": "https://github.com/tubaplaya21/snake#readme",
+  "devDependencies": {
+    "babel": "^6.23.0"
+  }
+}
