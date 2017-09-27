@@ -10,6 +10,7 @@ function Snake() {
   this.direction = 'right';
   this.food = [];
   this.over = false;
+  
   // Create game canvas and context
   var canvas = document.createElement('canvas');
   canvas.width = this.width * this.cellSize;
