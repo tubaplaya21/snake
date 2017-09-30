@@ -43,9 +43,14 @@ export default class Snake {
     this.body.pop();
     this.body.unshift({x: x, y: y});
     // Did we eat ourselves?
+    for(var i = 1; i < this.body.length; i++) {
+      if(x === this.body[i].x && y === this.body[i].y) {
+        return true;
+      }
+    }
     // Did we eat food?
     // Do we need to grow?
-
+    return false;
   }
   /** @function render
     * Render the snake
