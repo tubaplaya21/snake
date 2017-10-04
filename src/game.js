@@ -11,6 +11,9 @@ export default class Game {
     this.snake = new Snake(50, 50, 16);
     this.food = [];
     this.over = false;
+    this.input = {
+      direction: 'right'
+    }
     // Create the back buffer canvas
     this.backBufferCanvas = document.createElement('canvas');
     this.backBufferCanvas.width = 100;
@@ -24,47 +27,73 @@ export default class Game {
     this.screenBufferContext = this.screenBufferCanvas.getContext('2d');
     // Create HTML UI Elements
     var message = document.createElement('div');
-    div.id = "message";
-    message.innerText = "";
+    message.id = "message";
+    message.textContent = "";
     document.body.appendChild(message);
     // Bind class functions
     this.gameOver = this.gameOver.bind(this);
+    this.handleKeyDown = this.handleKeyDown.bind(this);
     this.update = this.update.bind(this);
     this.render = this.render.bind(this);
     this.loop = this.loop.bind(this);
+    // Set up event handlers
+    window.onkeydown = this.handleKeyDown;
     // Start the game loop
     this.interval = setInterval(this.loop, 500);
   }
-
   /** @function gameOver
-   *  Displays a game over message using the DOM.
-   */
-   function gameOver() {
-     var message = document.getElementById("message");
-
-   }
-
+    * Displays a game over message using the DOM
+    */
+  gameOver() {
+    var message = document.getElementById("message");
+    message.innerText = "Game Over";
+    this.over = true;
+  }
+  /** @method handleKeyDown
+    * register when a key is pressed and change
+    * our input object.
+    */
+  handleKeyDown(event) {
+    event.preventDefault();
+    switch(event.key){
+      case 'w':
+      case 'ArrowUp':
+        this.input.direction = 'up';
+        break;
+      case 'a':
+      case 'ArrowLeft':
+        this.input.direction = 'left';
+        break;
+      case 's':
+      case 'ArrowDown':
+        this.input.direction = 'down';
+        break;
+      case 'd':
+      case 'ArrowRight':
+        this.input.direction = 'right';
+        break;
+    }
+  }
   /** @method update
     * Updates the game world.
     */
   update() {
+
     if(!this.over) {
+      // determine if the snake hit a wall
       var position = this.snake.getPosition();
       if(position.x < 0 || position.x >= 100 ||
          position.y < 0 || position.y >= 100) {
-           this.over = true;
-           return;
+         return this.gameOver();
       }
-      if(Math.random() < 0.1){
-        this.food.push(new Food(Math.floor(Math.random() * 100)));
-      }
-
+      // Create food
+      //if(Math.random() < 0.1)
+        this.food.push(new Food(Math.floor(Math.random() * 100), Math.floor(Math.random() * 100)));
+      // Update snake and food
       this.food.forEach((food) => {
         food.update();
       });
-      this.over = this.snake.update(this.input);
-    }
-    else {
+      this.snake.update(this.input, this.gameOver);
     }
   }
   /** @method render

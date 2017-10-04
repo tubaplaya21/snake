@@ -13,7 +13,6 @@ canvas {
   border: 1px solid black;
   box-shadow: 5px 5px #777;
   image-rendering: pixelated;
-
 }
 
 #message {
