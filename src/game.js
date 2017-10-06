@@ -74,6 +74,7 @@ export default class Game {
         break;
     }
   }
+  
   /** @method update
     * Updates the game world.
     */
